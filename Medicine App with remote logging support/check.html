@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Authenticity Checker</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .container {
+      background: white;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      max-width: 400px;
+      width: 100%;
+    }
+    input, button {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    button {
+      background-color: #28a745;
+      color: white;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .result {
+      margin-top: 1rem;
+      padding: 1rem;
+      text-align: center;
+      border-radius: 5px;
+    }
+    .valid {
+      background-color: #d4edda;
+      color: #155724;
+    }
+    .invalid {
+      background-color: #f8d7da;
+      color: #721c24;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Verify Product Authenticity</h2>
+    <input type="text" id="location" placeholder="Location Code" required>
+    <input type="text" id="machine" placeholder="Machine Number" required>
+    <input type="number" step="0.1" id="temp" placeholder="Temperature (e.g., 25.0)" required>
+    <input type="number" step="0.1" id="humidity" placeholder="Humidity (e.g., 60.0)" required>
+    <button onclick="verifyHash()">Check Authenticity</button>
+    <div id="result" class="result" style="display: none;"></div>
+  </div>
+
+  <script>
+    async function sha256(message) {
+      const encoder = new TextEncoder();
+      const data = encoder.encode(message);
+      const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+      const hashArray = Array.from(new Uint8Array(hashBuffer));
+      return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+    }
+
+    async function verifyHash() {
+      const loc = document.getElementById('location').value.trim();
+      const mach = document.getElementById('machine').value.trim();
+      const temp = document.getElementById('temp').value.trim();
+      const hum = document.getElementById('humidity').value.trim();
+      const resultBox = document.getElementById('result');
+      resultBox.style.display = 'none';
+
+      if (!loc || !mach || !temp || !hum) {
+        alert("Please fill in all fields.");
+        return;
+      }
+
+      const combined = `${loc}|${mach}|${temp}|${hum}`;
+      const hash = await sha256(combined);
+
+      // Replace with your actual published Google Sheet as JSON endpoint via Apps Script
+      const sheetURL = 'https://script.google.com/macros/s/AKfycbyYeTsMbiXTC5DMTv9H-Hj0ibQuFG3loFCPhfz553D8Hfng5zy8pgKd1unmEzd0tLEi/exec';
+
+      try {
+        const response = await fetch(sheetURL);
+        const data = await response.json();
+        const allHashes = data.hashes || [];  // Assumes JSON format: { "hashes": ["...", "..."] }
+
+        if (allHashes.includes(hash)) {
+          resultBox.className = 'result valid';
+          resultBox.textContent = '✅ Product is Authentic';
+        } else {
+          resultBox.className = 'result invalid';
+          resultBox.textContent = '❌ Product Not Found or Tampered';
+        }
+        resultBox.style.display = 'block';
+      } catch (err) {
+        console.error(err);
+        resultBox.className = 'result invalid';
+        resultBox.textContent = '❌ Error verifying product. Try again later.';
+        resultBox.style.display = 'block';
+      }
+    }
+  </script>
+</body>
+</html>
