@@ -9,19 +9,25 @@ DHT dht(DHTPIN, DHTTYPE);
 WebServer server(80);
 
 // WiFi Credentials
-const char* ssid = "YOUR_SSID";
-const char* password = "YOUR_PASSWORD";
+const char* ssid = "Subham's F25 Pro 5G";
+const char* password = "Sark@21Subh";
 
-// Generate 4-digit OTP using DHT11 and timestamp
+// Generate 4-digit OTP using DHT11 temperature and timestamp
 String generateOTP() {
   float temp = dht.readTemperature();
+
   if (isnan(temp)) {
-    temp = 25.0; // fallback if sensor fails
+    Serial.println("❌ DHT read failed. Using fallback temp = 25.0");
+    temp = 25.0; // fallback temperature
+  } else {
+    Serial.print("🌡️ Temperature: ");
+    Serial.println(temp);
   }
 
   unsigned long timeNow = millis() / 1000;
   int rawOTP = abs((int)(temp * 100 + timeNow)) % 10000;
-  if (rawOTP < 1000) rawOTP += 1000;  // ensure 4-digit format
+
+  if (rawOTP < 1000) rawOTP += 1000;  // ensure 4-digit OTP
   return String(rawOTP);
 }
 
@@ -29,8 +35,11 @@ String generateOTP() {
 void handleOtp() {
   String otp = generateOTP();
   String json = "{\"otp\":\"" + otp + "\"}";
+
+  server.sendHeader("Access-Control-Allow-Origin", "*"); // enable CORS
   server.send(200, "application/json", json);
-  Serial.println("OTP sent: " + otp);
+
+  Serial.println("✅ OTP sent: " + otp);
 }
 
 void setup() {
@@ -38,22 +47,23 @@ void setup() {
   dht.begin();
 
   WiFi.begin(ssid, password);
-  Serial.print("Connecting to WiFi");
+  Serial.print("🔄 Connecting to WiFi");
 
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
     Serial.print(".");
   }
 
-  Serial.println("\nConnected!");
-  Serial.print("IP Address: ");
+  Serial.println("\n✅ Connected to WiFi!");
+  Serial.print("📡 IP Address: ");
   Serial.println(WiFi.localIP());
 
   server.on("/otp", handleOtp);
   server.begin();
-  Serial.println("HTTP server started");
+  Serial.println("🚀 HTTP server started");
 }
 
 void loop() {
   server.handleClient();
 }
+
