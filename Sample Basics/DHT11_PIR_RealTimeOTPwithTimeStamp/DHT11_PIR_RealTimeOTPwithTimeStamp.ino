@@ -1,5 +1,4 @@
 #include <WiFi.h>
-
 #include <WebServer.h>
 #include <DHT.h>
 #include <SHA256.h>  // Include the SHA256 library
