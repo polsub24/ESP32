@@ -19,7 +19,7 @@ const char* ssid = "Subham's F25 Pro 5G";
 const char* password = "Sark@21Subh";
 
 // Logging server or endpoint
-const char* serverName = "http://yourserver.com/log"; // Replace with actual server/API
+const char* serverName = "https://factory-monitor.onrender.com/log"; // Replace with actual server/API
 
 // State thresholds
 const float VIBRATION_THRESHOLD = 0.5;  // Adjust empirically
@@ -67,6 +67,15 @@ void loop() {
     alertMessage = "Machine running unattended!";
   }
 
+  // ✅ Debug Output
+  Serial.println("---------------");
+  Serial.print("Temp: "); Serial.print(temp); Serial.println(" °C");
+  Serial.print("Humidity: "); Serial.print(humidity); Serial.println(" %");
+  Serial.print("Worker present: "); Serial.println(workerPresent);
+  Serial.print("Machine active: "); Serial.println(machineActive);
+  Serial.print("Vibration magnitude: "); Serial.println(vibrationMagnitude);
+  Serial.print("Alert: "); Serial.println(alertMessage);
+
   // Log or send alert
   if (WiFi.status() == WL_CONNECTED) {
     HTTPClient http;
@@ -82,14 +91,13 @@ void loop() {
     postData += "}";
 
     int httpResponseCode = http.POST(postData);
-    if (httpResponseCode > 0) {
-      Serial.println("Data sent: " + String(httpResponseCode));
-    } else {
-      Serial.println("Error sending data");
-    }
+    Serial.print("Data sent: ");
+    Serial.println(httpResponseCode);
     http.end();
+  } else {
+    Serial.println("WiFi not connected");
   }
 
-  // Delay for stability
   delay(2000);
 }
+
