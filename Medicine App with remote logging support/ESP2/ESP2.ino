@@ -14,12 +14,12 @@
 #define GREEN_LED 27
 #define BUTTON_PIN 25
 
-const char* ssid = "Subham's F25 Pro 5G";
-const char* password = "Sark@21Subh";
+const char* ssid = "<Enter Wifi SSID>";
+const char* password = "<Enter Wifi Password>";
 const char* scriptURL = "https://script.google.com/macros/s/AKfycbzgpYu25WFiYbWmOuIV5fFMmciDjg5n_3aYd7SS0fu_R-XPqLm9nv5USEJjW8loiPHu/exec";
 
-const String locationCode = "LOC123";
-const String machineNumber = "MACH05";
+const String locationCode = "LOC213";
+const String machineNumber = "MACH01";
 
 bool loggingPaused = false;
 
