@@ -12,10 +12,10 @@
 #define WIFI_PASSWORD ""
 
 // Firebase credentials
-#define API_KEY "AIzaSyB79wlPomgTPAKOk97E5MlDjuOAAMjfq8M"       
-#define USER_EMAIL "roommonitoringtest@gmail.com"    
-#define USER_PASSWORD "room123" 
-#define DATABASE_URL "https://room-monitoring-system-80f63-default-rtdb.asia-southeast1.firebasedatabase.app/"
+#define API_KEY "Refer to env file before use"       
+#define USER_EMAIL "Refer to env file before use"    
+#define USER_PASSWORD "Refer to env file before use" 
+#define DATABASE_URL "Refer to env file before use"
 
 // Sensor Pins
 #define DHTPIN 14
