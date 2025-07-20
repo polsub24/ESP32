@@ -79,9 +79,9 @@ ESP32_Firmware/
 
 ## 🌐 Example Google Sheet Entry
 
-| Location | Machine | Temp | Humidity | SHA256 Hash  |
-| -------- | ------- | ---- | -------- | ------------ |
-| A1       | M2      | 24.5 | 60       | `9f8e...a0b` |
+| Time Stamp & Date   | Location | Machine | Temp | Humidity | SHA256 Hash  |
+| ------------------- | -------- | ------- | ---- | -------- | ------------ |
+| 19/07/2025 22:35:56 | A1       | M2      | 24.5 | 60       | `9f8e...a0b` |
 
 
 
