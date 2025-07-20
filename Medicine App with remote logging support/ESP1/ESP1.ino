@@ -14,12 +14,12 @@
 #define GREEN_LED 27
 #define BUTTON_PIN 25
 
-const char* ssid = "Subham's F25 Pro 5G";
-const char* password = "Sark@21Subh";
-const char* scriptURL = "https://script.google.com/macros/s/AKfycbzgpYu25WFiYbWmOuIV5fFMmciDjg5n_3aYd7SS0fu_R-XPqLm9nv5USEJjW8loiPHu/exec";
+const char* ssid = "YourWiFiName";
+const char* password = "YourWiFiPassword";
+const char* scriptURL = "Your Google Apps Script Web App URL";
 
-const String locationCode = "LOC123";
-const String machineNumber = "MACH02";
+const String locationCode = "LOC321";
+const String machineNumber = "MACH01";
 
 bool loggingPaused = false;
 
@@ -85,9 +85,9 @@ void loop() {
   // Wait for user to resume via button
   if (loggingPaused) {
     if (digitalRead(BUTTON_PIN) == LOW) {
-      delay(200); // debounce
+      delay(500); // debounce
       while (digitalRead(BUTTON_PIN) == LOW); // wait for release
-      delay(200); // debounce
+      delay(500); // debounce
       loggingPaused = false;
       digitalWrite(RED_LED, LOW);
       digitalWrite(GREEN_LED, HIGH);
