@@ -2,7 +2,7 @@
 #include <HTTPClient.h>
 #include <DHT.h>
 #include <Crypto.h>
-#include <SHA256.h>  // rweather's Crypto library
+#include <SHA256.h>
 
 #define DHTPIN 15
 #define DHTTYPE DHT11
