@@ -23,7 +23,6 @@ In sterile pharmaceutical packaging, maintaining traceability and authenticity i
 * ✅ DHT11 / DHT22 Sensor (Temperature & Humidity)
 * ✅ Pushbutton (for data trigger)
 * ✅ Wi-Fi (for Internet access)
-* ✅ Optional: OLED display for on-device feedback
 
 
 
