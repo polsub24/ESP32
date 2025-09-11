@@ -5,7 +5,11 @@
 
 #define SCREEN_WIDTH 128
 #define SCREEN_HEIGHT 64
+<<<<<<< HEAD
 #define OLED_ADDR    0x3C   // check with I2C scanner
+=======
+#define OLED_ADDR    0x3C  // check with I2C scanner
+>>>>>>> 97c8e1e3f7532a87a5586c0ae8a4c0e17827e20d
 #define PLAYER_WIDTH 12
 #define PLAYER_HEIGHT 4
 #define MAX_BULLETS 5   // number of bullets that can fall at once
